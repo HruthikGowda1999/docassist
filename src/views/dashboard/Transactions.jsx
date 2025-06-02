@@ -1,13 +1,13 @@
 // MUI Imports
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
 
 // Components Imports
-import OptionMenu from '@core/components/option-menu';
-import CustomAvatar from '@core/components/mui/Avatar';
+import OptionMenu from '@core/components/option-menu'
+import CustomAvatar from '@core/components/mui/Avatar'
 
 // Health Data
 const data = [
@@ -35,7 +35,7 @@ const data = [
     color: 'warning',
     icon: 'ri-fire-line'
   }
-];
+]
 
 const Transactions = () => {
   return (
@@ -45,7 +45,7 @@ const Transactions = () => {
         action={<OptionMenu iconClassName='text-textPrimary' options={['Refresh', 'Share', 'Update']} />}
         subheader={
           <p className='mbs-3'>
-            <span className='font-medium text-textPrimary'>You're doing great! 💪</span>
+            <span className='font-medium text-textPrimary'>You are doing great! 💪</span>
             <span className='text-textSecondary'>Daily summary</span>
           </p>
         }
@@ -68,7 +68,7 @@ const Transactions = () => {
         </Grid>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default Transactions;
+export default Transactions
