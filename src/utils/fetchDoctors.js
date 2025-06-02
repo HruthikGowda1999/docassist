@@ -1,6 +1,7 @@
-import { db } from '@/utils/firebaseConfig'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import toast from 'react-hot-toast'
+
+import { db } from '@/utils/firebaseConfig'
 
 const fetchDoctors = async (specialization = '') => {
   try {
@@ -26,7 +27,8 @@ const fetchDoctors = async (specialization = '') => {
   } catch (error) {
     console.error('Error fetching doctors:', error)
     toast.error('Failed to fetch doctors.')
-    return []
+    
+return []
   }
 }
 

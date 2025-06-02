@@ -1,7 +1,9 @@
-import { db, auth } from '@/utils/firebaseConfig'
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore'
+
 // import { createUserWithEmailAndPassword } from 'firebase/auth'
 import toast from 'react-hot-toast'
+
+import { db, auth } from '@/utils/firebaseConfig'
 
 const saveUserToFirebase = (form, setForm, onSuccessRedirect) => {
 
@@ -14,7 +16,8 @@ const saveUserToFirebase = (form, setForm, onSuccessRedirect) => {
 
       if (!emailSnap.empty) {
         toast.error('This email is already registered.')
-        return
+        
+return
       }
 
       // const userCredential = await createUserWithEmailAndPassword(

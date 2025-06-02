@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import OpenAI from 'openai'
 
 const openai = new OpenAI({
@@ -39,7 +40,8 @@ export async function POST(req) {
     return NextResponse.json({ answer, isSerious });
   } catch (error) {
     console.error('OpenAI API error:', error);
-    return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
+    
+return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
   }
 }
 

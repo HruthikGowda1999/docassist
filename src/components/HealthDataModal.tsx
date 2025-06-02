@@ -1,15 +1,19 @@
+import { useState } from 'react'
+
 import { Dialog } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { useState } from 'react'
-import { db } from '@/utils/firebaseConfig'
+
+
 import { addDoc, collection } from 'firebase/firestore'
 import Cookies from 'js-cookie'
 import dayjs from 'dayjs'
 import { motion, AnimatePresence } from 'framer-motion'
 import HealingIcon from '@mui/icons-material/Healing'
+
+import { db } from '@/utils/firebaseConfig'
 
 const HealthDataModal = ({ open, onClose }) => {
   const [data, setData] = useState({
@@ -25,9 +29,11 @@ const HealthDataModal = ({ open, onClose }) => {
 
   const handleSubmit = async () => {
     const userId = Cookies.get('user_id')
+
     if (!userId) {
       console.error('No user ID found in cookies.')
-      return
+      
+return
     }
 
     try {

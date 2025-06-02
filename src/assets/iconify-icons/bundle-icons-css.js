@@ -77,6 +77,7 @@ const target = join(__dirname, 'generated-icons.css');
 
     for (const prefix in organizedList) {
       const filename = require.resolve(`@iconify/json/json/${prefix}.json`);
+
       sourcesJSON.push({
         filename,
         icons: organizedList[prefix]
@@ -93,6 +94,7 @@ const target = join(__dirname, 'generated-icons.css');
 
       if (typeof item !== 'string' && item.icons?.length) {
         const filtered = getIcons(content, item.icons);
+
         if (!filtered) throw new Error(`Cannot find required icons in ${filename}`);
         allIcons.push(filtered);
       } else {
@@ -110,9 +112,11 @@ const target = join(__dirname, 'generated-icons.css');
       await iconSet.forEach(async (name, type) => {
         if (type !== 'icon') return;
         const svg = iconSet.toSVG(name);
+
         if (!svg) {
           iconSet.remove(name);
-          return;
+          
+return;
         }
 
         try {
@@ -131,7 +135,8 @@ const target = join(__dirname, 'generated-icons.css');
         } catch (err) {
           console.error(`Error parsing ${name} from ${source.dir}:`, err);
           iconSet.remove(name);
-          return;
+          
+return;
         }
 
         iconSet.fromSVG(name, svg);
@@ -161,6 +166,7 @@ function organizeIconsList(icons) {
 
   icons.forEach(icon => {
     const item = stringToIcon(icon);
+
     if (!item) return;
 
     const prefix = item.prefix;
