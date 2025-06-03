@@ -1,111 +1,62 @@
 'use client'
 
-// Next Imports
-import dynamic from 'next/dynamic'
-
-//MUI Imports
+// MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 
-// Styled Component Imports
-const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
+// Helper function to calculate BMI
+const calculateBMI = (weightKg, heightCm) => {
+  if (!weightKg || !heightCm) return null
+  const heightM = heightCm / 100
+  return (weightKg / (heightM * heightM)).toFixed(1)
+}
 
-// Vars
-const series = [
-  {
-    name: '2022',
-    data: [45, 85, 65, 50, 70]
-  }
-]
+// Get BMI status
+const getBMIStatus = bmi => {
+  if (!bmi) return 'Unknown'
+  if (bmi < 18.5) return 'Underweight'
+  if (bmi >= 18.5 && bmi < 24.9) return 'Normal weight'
+  if (bmi >= 25 && bmi < 29.9) return 'Overweight'
+  return 'Obese'
+}
 
-const DistributedColumnChart = () => {
-  // Hooks
+const BMIStatusCard = ({ healthData }) => {
   const theme = useTheme()
 
-  // Vars
-  const primaryColor = 'var(--mui-palette-primary-main)'
-  const errorColor = 'var(--mui-palette-error-main)'
-  const trackBgColor = 'var(--mui-palette-customColors-trackBg)'
+  const height = healthData?.height
+  const weight = healthData?.bodyWeight
+  const bmi = calculateBMI(weight, height)
+  const status = getBMIStatus(bmi)
 
-  const options = {
-    chart: {
-      type: 'bar',
-      stacked: false,
-      parentHeightOffset: 0,
-      toolbar: { show: false }
-    },
-    tooltip: {
-      x: { show: false }
-    },
-    grid: {
-      show: false,
-      padding: {
-        top: -10,
-        left: -3,
-        right: -2,
-        bottom: 5
-      }
-    },
-    legend: { show: false },
-    dataLabels: { enabled: false },
-    colors: [errorColor, primaryColor, errorColor, primaryColor, primaryColor],
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: '24%',
-        borderRadius: 4,
-        borderRadiusApplication: 'around',
-        borderRadiusWhenStacked: 'all',
-        distributed: true,
-        colors: {
-          backgroundBarRadius: 5,
-          backgroundBarColors: [trackBgColor, trackBgColor, trackBgColor, trackBgColor, trackBgColor]
-        }
-      }
-    },
-    xaxis: {
-      labels: { show: false },
-      axisTicks: { show: false },
-      axisBorder: { show: false }
-    },
-    yaxis: { show: false },
-    responsive: [
-      {
-        breakpoint: 900,
-        options: {
-          plotOptions: {
-            bar: {
-              columnWidth: '18%'
-            }
-          }
-        }
-      },
-      {
-        breakpoint: theme.breakpoints.values.sm,
-        options: {
-          plotOptions: {
-            bar: {
-              columnWidth: '12%'
-            }
-          }
-        }
-      }
-    ]
+  const colorMap = {
+    Underweight: theme.palette.warning.main,
+    'Normal weight': theme.palette.success.main,
+    Overweight: theme.palette.error.light,
+    Obese: theme.palette.error.main,
+    Unknown: theme.palette.text.secondary
   }
 
   return (
     <Card>
       <CardContent>
-        <Typography variant='h4'>2,856</Typography>
-        <AppReactApexCharts type='bar' height={88} width='100%' options={options} series={series} />
-        <Typography color='text.primary' className='font-medium text-center'>
-          Sessions
+        <Typography variant='h6'>BMI Status</Typography>
+        <Typography variant='h4' sx={{ color: colorMap[status], mt: 2, mb: 1 }}>
+          {status}
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          Height: {height ? `${height} cm` : 'N/A'}
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          Weight: {weight ? `${weight} kg` : 'N/A'}
+        </Typography>
+        <Typography variant='body2' color='text.secondary'>
+          BMI: {bmi || 'N/A'}
         </Typography>
       </CardContent>
     </Card>
   )
 }
 
-export default DistributedColumnChart
+export default BMIStatusCard

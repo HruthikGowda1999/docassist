@@ -51,8 +51,20 @@ const Register = ({ mode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(prev => !prev)
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    setErrors({ ...errors, [e.target.name]: '' })
+    const { name, value } = e.target
+    let updatedValue = value
+
+    if (name === 'fullName') {
+      // 1. Convert to uppercase
+      updatedValue = value.toUpperCase()
+      // 2. Replace multiple spaces with single space
+      updatedValue = updatedValue.replace(/\s+/g, ' ')
+      // 3. Trim spaces at start and end
+      updatedValue = updatedValue.trimStart() // Allow trailing space while typing
+    }
+
+    setForm(prev => ({ ...prev, [name]: updatedValue }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
   const validate = () => {
@@ -125,18 +137,11 @@ const Register = ({ mode }) => {
                 label='Full Name'
                 name='fullName'
                 value={form.fullName}
-                onChange={e =>
-                  handleChange({
-                    ...e,
-                    target: {
-                      ...e.target,
-                      value: e.target.value.toUpperCase() // 🔠 convert to uppercase
-                    }
-                  })
-                }
+                onChange={handleChange}
                 error={!!errors.fullName}
                 helperText={errors.fullName}
               />
+
               {/* <TextField
                 fullWidth
                 label='Username'

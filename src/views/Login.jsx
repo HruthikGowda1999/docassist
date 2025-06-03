@@ -54,7 +54,6 @@ const Login = ({ mode }) => {
   }
 
   const handleSubmit = async e => {
-    debugger
     e.preventDefault()
 
     const { email, password } = form
