@@ -6,6 +6,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
 import Grow from '@mui/material/Grow'
 import Typography from '@mui/material/Typography'
+import { Box } from '@mui/material'
+import { Dialog } from '@mui/material'
 
 // React + Other Imports
 import { useEffect, useState } from 'react'
@@ -82,6 +84,7 @@ const DashboardAnalytics = () => {
   const [healthData, setHealthData] = useState(null)
   const [weeklySteps, setWeeklySteps] = useState([])
   const [weeklyHealthData, setWeeklyHealthData] = useState([])
+  const [openImage, setOpenImage] = useState(null)
 
   useEffect(() => {
     const userId = Cookies.get('user_id')
@@ -199,21 +202,123 @@ const DashboardAnalytics = () => {
 
   if (checkingAuth) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
         <CircularProgress />
-      </div>
+      </Box>
     )
   }
 
-  const relaxationVideos = ['https://www.youtube.com/embed/ZToicYcHIOU', 'https://www.youtube.com/embed/sTANio_2E0Q']
+  const relaxationVideos = ['https://www.youtube.com/embed/ZToicYcHIOU']
+  const parentingTipsVideos = ['https://www.youtube.com/embed/J0yn7jzEXDM']
+  const nutritionalGuideVideos = ['https://www.youtube.com/embed/9fNCIiFbHbY']
 
-  const parentingTipsVideos = ['https://www.youtube.com/embed/J0yn7jzEXDM', 'https://www.youtube.com/embed/q2aYkZTw2iU']
-
-  const nutritionalGuideVideos = [
-    'https://www.youtube.com/embed/9fNCIiFbHbY',
-    'https://www.youtube.com/embed/D0nFGrwL6NQ'
+  // Example blog cards data for Relaxation Videos
+  const relaxationBlogs = [
+     {
+                    title: 'Breathing Exercises for Calmness',
+                    image: '/images/relaxation/breathing.jpg',
+                    content:
+                      'Learn simple breathing techniques that help reduce anxiety and improve oxygen flow for you and your baby.'
+                  },
+                  {
+                    title: 'Prenatal Yoga Poses',
+                    image: '/images/relaxation/yoga-poses.jpg',
+                    content:
+                      'Explore gentle yoga poses designed specifically for pregnant women to increase flexibility and relieve tension.'
+                  },
+                  {
+                    title: 'Meditation for Expecting Moms',
+                    image: '/images/relaxation/meditation.avif',
+                    content:
+                      'Practice mindfulness meditation to stay grounded, lower blood pressure, and foster emotional balance.'
+                  }
   ]
 
+  const parentingTipsBlogs = [
+    {
+                  title: 'Creating a Sleep Routine for Newborns',
+                  image: '/images/parenting/readyforsleep.png',
+                  content:
+                    'Learn how to establish a consistent bedtime routine that supports your baby’s development and gives you peace of mind.'
+                },
+                {
+                  title: 'Bonding with Your Baby',
+                  image: '/images/parenting/bondingwithbaby.png',
+                  content:
+                    'Discover effective ways to strengthen your emotional connection with your newborn through touch, voice, and eye contact.'
+                },
+                {
+                  title: 'Tips for Soothing a Crying Baby',
+                  image: '/images/parenting/scientists-say-the-bes.jpg',
+                  content: 'Understand the common reasons babies cry and how to respond calmly and confidently.'
+                }
+  ]
+
+  const nutritionalGuideBlogs = [
+    {
+                  title: 'Top 12 Superfoods During Pregnancy',
+                  image: '/images/nutrition/dggg.webp',
+                  content:
+                    'Include leafy greens, eggs, Greek yogurt, salmon, and nuts to boost both your and your baby’s health.'
+                },
+                {
+                  title: 'Hydration and Its Importance',
+                  image: '/images/nutrition/hydrationwater.webp',
+                  content:
+                    'Staying hydrated helps maintain amniotic fluid levels and supports better nutrient delivery to your baby.'
+                },
+                {
+                  title: 'Healthy Snack Ideas for Moms-to-Be',
+                  image: '/images/nutrition/snacks.webp',
+                  content:
+                    'Snacking smart can help maintain energy levels. Try fruit slices with peanut butter, hummus with veggies, or yogurt with berries.'
+                }
+  ]
+
+  const BlogSection = ({ title, description, blogs, onImageClick }) => (
+    <Box sx={{ textAlign: 'center', mb: 6 }}>
+      <Typography variant='h5' gutterBottom>
+        {title}
+      </Typography>
+      <Typography variant='body2' gutterBottom sx={{ mb: 3, mx: 'auto', maxWidth: 600 }}>
+        {description}
+      </Typography>
+      <Grid container spacing={4} justifyContent='center'>
+        {blogs.map((blog, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Paper
+              elevation={3}
+              sx={{
+                p: 2,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                cursor: 'pointer',
+                '&:hover': {
+                  boxShadow: 8,
+                  transform: 'scale(1.03)',
+                  transition: 'all 0.3s ease'
+                }
+              }}
+              onClick={() => onImageClick(blog.image)}
+            >
+              <img
+                src={blog.image}
+                alt={blog.title}
+                style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 8 }}
+              />
+              <Typography variant='h6' sx={{ mt: 2, mb: 1 }}>
+                {blog.title}
+              </Typography>
+              <Typography variant='body2' sx={{ flexGrow: 1 }}>
+                {blog.content}
+              </Typography>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  )
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} md={4}>
@@ -242,152 +347,53 @@ const DashboardAnalytics = () => {
           <VideoSection
             title='Relaxation Videos'
             videoUrls={relaxationVideos}
-            description='These videos help you stay calm and reduce anxiety during your pregnancy journey.'
+            description='This video help you stay calm and reduce anxiety during your pregnancy journey.'
           />
+          <BlogSection
+            title='Relaxation Blogs'
+            description='Discover calming techniques and practices to ease stress and promote well-being during your pregnancy.'
+            blogs={relaxationBlogs}
+            onImageClick={setOpenImage}
+          />
+
           <VideoSection
             title='Parenting Tips'
             videoUrls={parentingTipsVideos}
-            description='Learn important tips and tricks for newborn care and what to expect after delivery.'
+            description='Helpful tips for new parents to navigate the early stages of parenthood with confidence.'
           />
+          <BlogSection
+            title='Parenting Tips Blogs'
+            description='Useful advice and guidance for new parents as they care for their newborn.'
+            blogs={parentingTipsBlogs}
+            onImageClick={setOpenImage}
+          />
+
           <VideoSection
             title='Nutritional Guide'
             videoUrls={nutritionalGuideVideos}
-            description='Discover essential dietary guidelines to ensure proper nutrition during pregnancy.'
+            description='Guidance on a healthy diet to support you and your baby’s development throughout pregnancy.'
+          />
+          <BlogSection
+            title='Nutritional Guide Blogs'
+            description='Nutrition tips and meal ideas to keep you and your baby healthy.'
+            blogs={nutritionalGuideBlogs}
+            onImageClick={setOpenImage}
           />
         </>
       )}
+      {/* Health Data Modal */}
+      {showHealthModal && (
+        <HealthDataModal
+          open={showHealthModal}
+          onClose={() => setShowHealthModal(false)}
+          onSave={handleSaveHealthData}
+        />
+      )}
 
-      <HealthDataModal open={showHealthModal} onClose={() => setShowHealthModal(false)} onSave={handleSaveHealthData} />
-      {/* Parenting Tips Blogs */}
-      <Grid item xs={12}>
-        <Typography variant='h5' gutterBottom>
-          Parenting Tips - Blog
-        </Typography>
-        <Typography variant='body2' gutterBottom sx={{ mb: 3 }}>
-          Gain insights on how to handle your newborn, develop routines, and build a healthy parent-child relationship.
-        </Typography>
-        <Grid container spacing={4}>
-          {[
-            {
-              title: 'Creating a Sleep Routine for Newborns',
-              image: 'https://images.unsplash.com/photo-1581167760498-62b6e7da17df',
-              content:
-                'Learn how to establish a consistent bedtime routine that supports your baby’s development and gives you peace of mind.'
-            },
-            {
-              title: 'Bonding with Your Baby',
-              image: 'https://images.unsplash.com/photo-1511988617509-a57c8a288659',
-              content:
-                'Discover effective ways to strengthen your emotional connection with your newborn through touch, voice, and eye contact.'
-            },
-            {
-              title: 'Tips for Soothing a Crying Baby',
-              image: 'https://images.unsplash.com/photo-1615390242242-95f1e5e4027e',
-              content: 'Understand the common reasons babies cry and how to respond calmly and confidently.'
-            }
-          ].map((blog, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Paper
-                elevation={3}
-                sx={{
-                  p: 2,
-                  borderRadius: 4,
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  transition: '0.3s',
-                  '&:hover': { boxShadow: 6 }
-                }}
-              >
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  style={{
-                    borderRadius: '12px',
-                    width: '100%',
-                    height: '180px',
-                    objectFit: 'cover',
-                    marginBottom: '1rem'
-                  }}
-                />
-                <Typography variant='h6' gutterBottom>
-                  {blog.title}
-                </Typography>
-                <Typography variant='body2' color='textSecondary'>
-                  {blog.content}
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-
-      {/* Nutrition Blogs */}
-      <Grid item xs={12}>
-        <Typography variant='h5' gutterBottom>
-          Nutritional Guide - Blog
-        </Typography>
-        <Typography variant='body2' gutterBottom sx={{ mb: 3 }}>
-          Proper nutrition is vital for a healthy pregnancy. Explore these practical food tips and meal ideas.
-        </Typography>
-        <Grid container spacing={4}>
-          {[
-            {
-              title: 'Top 5 Superfoods During Pregnancy',
-              image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443',
-              content:
-                'Include leafy greens, eggs, Greek yogurt, salmon, and nuts to boost both your and your baby’s health.'
-            },
-            {
-              title: 'Hydration and Its Importance',
-              image: 'https://images.unsplash.com/photo-1559628231-0d52f26c5c3f',
-              content:
-                'Staying hydrated helps maintain amniotic fluid levels and supports better nutrient delivery to your baby.'
-            },
-            {
-              title: 'Healthy Snack Ideas for Moms-to-Be',
-              image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994',
-              content:
-                'Snacking smart can help maintain energy levels. Try fruit slices with peanut butter, hummus with veggies, or yogurt with berries.'
-            }
-          ].map((blog, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Paper
-                elevation={3}
-                sx={{
-                  p: 2,
-                  borderRadius: 4,
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  transition: '0.3s',
-                  '&:hover': { boxShadow: 6 }
-                }}
-              >
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  style={{
-                    borderRadius: '12px',
-                    width: '100%',
-                    height: '180px',
-                    objectFit: 'cover',
-                    marginBottom: '1rem'
-                  }}
-                />
-                <Typography variant='h6' gutterBottom>
-                  {blog.title}
-                </Typography>
-                <Typography variant='body2' color='textSecondary'>
-                  {blog.content}
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
+      {/* Image Dialog for Blog Images */}
+      <Dialog open={Boolean(openImage)} onClose={() => setOpenImage(null)} maxWidth='md' fullWidth>
+        {openImage && <img src={openImage} alt='Blog related' style={{ width: '100%', height: 'auto' }} />}
+      </Dialog>
     </Grid>
   )
 }
