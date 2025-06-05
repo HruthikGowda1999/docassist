@@ -58,6 +58,7 @@ const VideoSection = ({ title, videoUrls, description }) => (
                   src={url}
                   title={`Video ${index + 1}`}
                   frameBorder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                   allowFullScreen
                   style={{
                     position: 'absolute',
@@ -208,71 +209,81 @@ const DashboardAnalytics = () => {
     )
   }
 
-  const relaxationVideos = ['https://www.youtube.com/embed/ZToicYcHIOU']
-  const parentingTipsVideos = ['https://www.youtube.com/embed/J0yn7jzEXDM']
-  const nutritionalGuideVideos = ['https://www.youtube.com/embed/9fNCIiFbHbY']
+  const relaxationVideos = [
+    'https://www.youtube.com/embed/iKniDZF50-w',
+    'https://www.youtube.com/embed/4NwQKXpWN_A',
+    'https://www.youtube.com/embed/Km0CsOjF_Fw'
+  ]
+  const parentingTipsVideos = [
+    'https://www.youtube.com/embed/2jr6aisK3NE?si=ZivWeLjMdppdPYL_',
+    'https://www.youtube.com/embed/Cr5R8fIw0Fk?si=ZhpiFI8vkLpif2g7',
+    'https://www.youtube.com/embed/JePLWMMw3z0?si=Ukmpwyg-i44pzXyR'
+  ]
+  const nutritionalGuideVideos = [
+    'https://www.youtube.com/embed/pEBub_-yTKg?si=rVPRuaMJxZyVzJuJ',
+    'https://www.youtube.com/embed/9YnMf_6zEWw?si=wz8xcGjiROENszUZ',
+    'https://www.youtube.com/embed/iBYLNtWSSyA?si=gb2scoYG0WnH-93y'
+  ]
 
   // Example blog cards data for Relaxation Videos
   const relaxationBlogs = [
-     {
-                    title: 'Breathing Exercises for Calmness',
-                    image: '/images/relaxation/breathing.jpg',
-                    content:
-                      'Learn simple breathing techniques that help reduce anxiety and improve oxygen flow for you and your baby.'
-                  },
-                  {
-                    title: 'Prenatal Yoga Poses',
-                    image: '/images/relaxation/yoga-poses.jpg',
-                    content:
-                      'Explore gentle yoga poses designed specifically for pregnant women to increase flexibility and relieve tension.'
-                  },
-                  {
-                    title: 'Meditation for Expecting Moms',
-                    image: '/images/relaxation/meditation.avif',
-                    content:
-                      'Practice mindfulness meditation to stay grounded, lower blood pressure, and foster emotional balance.'
-                  }
+    {
+      title: 'Breathing Exercises for Calmness',
+      image: '/images/relaxation/breathing.jpg',
+      content:
+        'Learn simple breathing techniques that help reduce anxiety and improve oxygen flow for you and your baby.'
+    },
+    {
+      title: 'Prenatal Yoga Poses',
+      image: '/images/relaxation/yoga-poses.jpg',
+      content:
+        'Explore gentle yoga poses designed specifically for pregnant women to increase flexibility and relieve tension.'
+    },
+    {
+      title: 'Meditation for Expecting Moms',
+      image: '/images/relaxation/meditation.avif',
+      content: 'Practice mindfulness meditation to stay grounded, lower blood pressure, and foster emotional balance.'
+    }
   ]
 
   const parentingTipsBlogs = [
     {
-                  title: 'Creating a Sleep Routine for Newborns',
-                  image: '/images/parenting/readyforsleep.png',
-                  content:
-                    'Learn how to establish a consistent bedtime routine that supports your baby’s development and gives you peace of mind.'
-                },
-                {
-                  title: 'Bonding with Your Baby',
-                  image: '/images/parenting/bondingwithbaby.png',
-                  content:
-                    'Discover effective ways to strengthen your emotional connection with your newborn through touch, voice, and eye contact.'
-                },
-                {
-                  title: 'Tips for Soothing a Crying Baby',
-                  image: '/images/parenting/scientists-say-the-bes.jpg',
-                  content: 'Understand the common reasons babies cry and how to respond calmly and confidently.'
-                }
+      title: 'Creating a Sleep Routine for Newborns',
+      image: '/images/parenting/readyforsleep.png',
+      content:
+        'Learn how to establish a consistent bedtime routine that supports your baby’s development and gives you peace of mind.'
+    },
+    {
+      title: 'Bonding with Your Baby',
+      image: '/images/parenting/bondingwithbaby.png',
+      content:
+        'Discover effective ways to strengthen your emotional connection with your newborn through touch, voice, and eye contact.'
+    },
+    {
+      title: 'Tips for Soothing a Crying Baby',
+      image: '/images/parenting/scientists-say-the-bes.jpg',
+      content: 'Understand the common reasons babies cry and how to respond calmly and confidently.'
+    }
   ]
 
   const nutritionalGuideBlogs = [
     {
-                  title: 'Top 12 Superfoods During Pregnancy',
-                  image: '/images/nutrition/dggg.webp',
-                  content:
-                    'Include leafy greens, eggs, Greek yogurt, salmon, and nuts to boost both your and your baby’s health.'
-                },
-                {
-                  title: 'Hydration and Its Importance',
-                  image: '/images/nutrition/hydrationwater.webp',
-                  content:
-                    'Staying hydrated helps maintain amniotic fluid levels and supports better nutrient delivery to your baby.'
-                },
-                {
-                  title: 'Healthy Snack Ideas for Moms-to-Be',
-                  image: '/images/nutrition/snacks.webp',
-                  content:
-                    'Snacking smart can help maintain energy levels. Try fruit slices with peanut butter, hummus with veggies, or yogurt with berries.'
-                }
+      title: 'Top 12 Superfoods During Pregnancy',
+      image: '/images/nutrition/dggg.webp',
+      content: 'Include leafy greens, eggs, Greek yogurt, salmon, and nuts to boost both your and your baby’s health.'
+    },
+    {
+      title: 'Hydration and Its Importance',
+      image: '/images/nutrition/hydrationwater.webp',
+      content:
+        'Staying hydrated helps maintain amniotic fluid levels and supports better nutrient delivery to your baby.'
+    },
+    {
+      title: 'Healthy Snack Ideas for Moms-to-Be',
+      image: '/images/nutrition/snacks.webp',
+      content:
+        'Snacking smart can help maintain energy levels. Try fruit slices with peanut butter, hummus with veggies, or yogurt with berries.'
+    }
   ]
 
   const BlogSection = ({ title, description, blogs, onImageClick }) => (
@@ -342,45 +353,92 @@ const DashboardAnalytics = () => {
       </Grid>
 
       {/* Patient-Specific Section */}
-      {userRole === 'Patient' && (
-        <>
-          <VideoSection
-            title='Relaxation Videos'
-            videoUrls={relaxationVideos}
-            description='This video help you stay calm and reduce anxiety during your pregnancy journey.'
-          />
-          <BlogSection
-            title='Relaxation Blogs'
-            description='Discover calming techniques and practices to ease stress and promote well-being during your pregnancy.'
-            blogs={relaxationBlogs}
-            onImageClick={setOpenImage}
-          />
 
-          <VideoSection
-            title='Parenting Tips'
-            videoUrls={parentingTipsVideos}
-            description='Helpful tips for new parents to navigate the early stages of parenthood with confidence.'
-          />
-          <BlogSection
-            title='Parenting Tips Blogs'
-            description='Useful advice and guidance for new parents as they care for their newborn.'
-            blogs={parentingTipsBlogs}
-            onImageClick={setOpenImage}
-          />
+   {userRole === 'Patient' && (
+  <Box sx={{ px: { xs: 2, sm: 4, md: 6 }, py: { xs: 4, sm: 6, md: 8 } }}>
+    {/* Relaxation Section */}
+    <Box
+      sx={{
+        px: { xs: 2, sm: 4 },
+        py: { xs: 4, sm: 5 },
+        mb: 6,
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 2,
+        boxShadow: 1,
+      }}
+    >
+      <VideoSection
+        title='Relaxation Videos'
+        videoUrls={relaxationVideos}
+        description='This video helps you stay calm and reduce anxiety during your pregnancy journey.'
+      />
+      <Box sx={{ mt: 4 }}>
+        <BlogSection
+          title='Relaxation Blogs'
+          description='Discover calming techniques and practices to ease stress and promote well-being during your pregnancy.'
+          blogs={relaxationBlogs}
+          onImageClick={setOpenImage}
+        />
+      </Box>
+    </Box>
 
-          <VideoSection
-            title='Nutritional Guide'
-            videoUrls={nutritionalGuideVideos}
-            description='Guidance on a healthy diet to support you and your baby’s development throughout pregnancy.'
-          />
-          <BlogSection
-            title='Nutritional Guide Blogs'
-            description='Nutrition tips and meal ideas to keep you and your baby healthy.'
-            blogs={nutritionalGuideBlogs}
-            onImageClick={setOpenImage}
-          />
-        </>
-      )}
+    {/* Parenting Section */}
+    <Box
+      sx={{
+        px: { xs: 2, sm: 4 },
+        py: { xs: 4, sm: 5 },
+        mb: 6,
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 2,
+        boxShadow: 1,
+      }}
+    >
+      <VideoSection
+        title='Parenting Tips'
+        videoUrls={parentingTipsVideos}
+        description='Helpful tips for new parents to navigate the early stages of parenthood with confidence.'
+      />
+      <Box sx={{ mt: 4 }}>
+        <BlogSection
+          title='Parenting Tips Blogs'
+          description='Useful advice and guidance for new parents as they care for their newborn.'
+          blogs={parentingTipsBlogs}
+          onImageClick={setOpenImage}
+        />
+      </Box>
+    </Box>
+
+    {/* Nutritional Section */}
+    <Box
+      sx={{
+        px: { xs: 2, sm: 4 },
+        py: { xs: 4, sm: 5 },
+        mb: 6,
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 2,
+        boxShadow: 1,
+      }}
+    >
+      <VideoSection
+        title='Nutritional Guide'
+        videoUrls={nutritionalGuideVideos}
+        description='Guidance on a healthy diet to support you and your baby’s development throughout pregnancy.'
+      />
+      <Box sx={{ mt: 4 }}>
+        <BlogSection
+          title='Nutritional Guide Blogs'
+          description='Nutrition tips and meal ideas to keep you and your baby healthy.'
+          blogs={nutritionalGuideBlogs}
+          onImageClick={setOpenImage}
+        />
+      </Box>
+    </Box>
+  </Box>
+)}
+
       {/* Health Data Modal */}
       {showHealthModal && (
         <HealthDataModal
