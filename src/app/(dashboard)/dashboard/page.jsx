@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
-
+import utc from 'dayjs/plugin/utc'
 // Firebase
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/utils/firebaseConfig'
@@ -125,6 +125,8 @@ const DashboardAnalytics = () => {
     if (!checkingAuth) fetchWeeklyHealthData()
   }, [checkingAuth])
 
+  dayjs.extend(utc)
+
   useEffect(() => {
     const fetchWeeklySteps = async () => {
       const userId = Cookies.get('user_id')
@@ -138,8 +140,18 @@ const DashboardAnalytics = () => {
       }
 
       const healthQuery = query(collection(db, 'healthData'), where('userId', '==', userId))
+
       const snapshot = await getDocs(healthQuery)
-      const allDocs = snapshot.docs.map(doc => doc.data())
+      const allDocs = snapshot.docs.map(doc => {
+        const data = doc.data()
+        return {
+          ...data,
+          date: dayjs(data.date?.toDate ? data.date.toDate() : data.date).format('YYYY-MM-DD')
+        }
+      })
+
+      console.log('Past week:', pastWeek)
+      console.log('All docs:', allDocs)
 
       const weeklyData = pastWeek.map(date => {
         const doc = allDocs.find(d => d.date === date)
@@ -354,90 +366,90 @@ const DashboardAnalytics = () => {
 
       {/* Patient-Specific Section */}
 
-   {userRole === 'Patient' && (
-  <Box sx={{ px: { xs: 2, sm: 4, md: 6 }, py: { xs: 4, sm: 6, md: 8 } }}>
-    {/* Relaxation Section */}
-    <Box
-      sx={{
-        px: { xs: 2, sm: 4 },
-        py: { xs: 4, sm: 5 },
-        mb: 6,
-        textAlign: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 2,
-        boxShadow: 1,
-      }}
-    >
-      <VideoSection
-        title='Relaxation Videos'
-        videoUrls={relaxationVideos}
-        description='This video helps you stay calm and reduce anxiety during your pregnancy journey.'
-      />
-      <Box sx={{ mt: 4 }}>
-        <BlogSection
-          title='Relaxation Blogs'
-          description='Discover calming techniques and practices to ease stress and promote well-being during your pregnancy.'
-          blogs={relaxationBlogs}
-          onImageClick={setOpenImage}
-        />
-      </Box>
-    </Box>
+      {userRole === 'Patient' && (
+        <Box sx={{ px: { xs: 2, sm: 4, md: 6 }, py: { xs: 4, sm: 6, md: 8 } }}>
+          {/* Relaxation Section */}
+          <Box
+            sx={{
+              px: { xs: 2, sm: 4 },
+              py: { xs: 4, sm: 5 },
+              mb: 6,
+              textAlign: 'center',
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1
+            }}
+          >
+            <VideoSection
+              title='Relaxation Videos'
+              videoUrls={relaxationVideos}
+              description='This video helps you stay calm and reduce anxiety during your pregnancy journey.'
+            />
+            <Box sx={{ mt: 4 }}>
+              <BlogSection
+                title='Relaxation Blogs'
+                description='Discover calming techniques and practices to ease stress and promote well-being during your pregnancy.'
+                blogs={relaxationBlogs}
+                onImageClick={setOpenImage}
+              />
+            </Box>
+          </Box>
 
-    {/* Parenting Section */}
-    <Box
-      sx={{
-        px: { xs: 2, sm: 4 },
-        py: { xs: 4, sm: 5 },
-        mb: 6,
-        textAlign: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 2,
-        boxShadow: 1,
-      }}
-    >
-      <VideoSection
-        title='Parenting Tips'
-        videoUrls={parentingTipsVideos}
-        description='Helpful tips for new parents to navigate the early stages of parenthood with confidence.'
-      />
-      <Box sx={{ mt: 4 }}>
-        <BlogSection
-          title='Parenting Tips Blogs'
-          description='Useful advice and guidance for new parents as they care for their newborn.'
-          blogs={parentingTipsBlogs}
-          onImageClick={setOpenImage}
-        />
-      </Box>
-    </Box>
+          {/* Parenting Section */}
+          <Box
+            sx={{
+              px: { xs: 2, sm: 4 },
+              py: { xs: 4, sm: 5 },
+              mb: 6,
+              textAlign: 'center',
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1
+            }}
+          >
+            <VideoSection
+              title='Parenting Tips'
+              videoUrls={parentingTipsVideos}
+              description='Helpful tips for new parents to navigate the early stages of parenthood with confidence.'
+            />
+            <Box sx={{ mt: 4 }}>
+              <BlogSection
+                title='Parenting Tips Blogs'
+                description='Useful advice and guidance for new parents as they care for their newborn.'
+                blogs={parentingTipsBlogs}
+                onImageClick={setOpenImage}
+              />
+            </Box>
+          </Box>
 
-    {/* Nutritional Section */}
-    <Box
-      sx={{
-        px: { xs: 2, sm: 4 },
-        py: { xs: 4, sm: 5 },
-        mb: 6,
-        textAlign: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 2,
-        boxShadow: 1,
-      }}
-    >
-      <VideoSection
-        title='Nutritional Guide'
-        videoUrls={nutritionalGuideVideos}
-        description='Guidance on a healthy diet to support you and your baby’s development throughout pregnancy.'
-      />
-      <Box sx={{ mt: 4 }}>
-        <BlogSection
-          title='Nutritional Guide Blogs'
-          description='Nutrition tips and meal ideas to keep you and your baby healthy.'
-          blogs={nutritionalGuideBlogs}
-          onImageClick={setOpenImage}
-        />
-      </Box>
-    </Box>
-  </Box>
-)}
+          {/* Nutritional Section */}
+          <Box
+            sx={{
+              px: { xs: 2, sm: 4 },
+              py: { xs: 4, sm: 5 },
+              mb: 6,
+              textAlign: 'center',
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1
+            }}
+          >
+            <VideoSection
+              title='Nutritional Guide'
+              videoUrls={nutritionalGuideVideos}
+              description='Guidance on a healthy diet to support you and your baby’s development throughout pregnancy.'
+            />
+            <Box sx={{ mt: 4 }}>
+              <BlogSection
+                title='Nutritional Guide Blogs'
+                description='Nutrition tips and meal ideas to keep you and your baby healthy.'
+                blogs={nutritionalGuideBlogs}
+                onImageClick={setOpenImage}
+              />
+            </Box>
+          </Box>
+        </Box>
+      )}
 
       {/* Health Data Modal */}
       {showHealthModal && (

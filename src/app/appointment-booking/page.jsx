@@ -32,7 +32,14 @@ import toast from 'react-hot-toast'
 import { db } from '@/utils/firebaseConfig'
 import { collection, addDoc, query, Timestamp, where, getDocs, updateDoc, doc } from 'firebase/firestore'
 
-const specializations = ['Cardiologist', 'Dermatologist', 'General Surgeon', 'Pediatrician', 'Neurologist']
+const specializations = [
+  'Obstetrician',
+  'Gynecologist',
+  'Prenatal Care Specialist',
+  'Maternal-Fetal Medicine Specialist',
+  'Midwife',
+  'Reproductive Endocrinologist'
+]
 
 const generateSlots = () => {
   const slots = []

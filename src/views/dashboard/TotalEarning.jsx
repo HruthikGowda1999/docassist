@@ -15,8 +15,9 @@ import OptionMenu from '@core/components/option-menu'
 const calculateProgress = (value, goal) => Math.min((value / goal) * 100, 100)
 
 const TotalEarning = ({ data }) => {
-  const hydrationGoal = 2000 // in mL
-  const exerciseGoal = 50 // in minutes
+  debugger
+  const hydrationGoal = 4 // in Liters
+  const exerciseGoal = 180 // in minutes
   const sleepGoal = 8 // in hours
 
   const totalDays = data.length || 1
@@ -24,7 +25,7 @@ const TotalEarning = ({ data }) => {
   const totals = data.reduce(
     (acc, entry) => {
       acc.hydration += Number(entry.hydration || 0)
-      acc.exercise += Number(entry.exercise || 0)
+      acc.exercise += Number(entry.exercise || 0) * 60 // Convert hours to minutes
       acc.sleep += Number(entry.sleep || 0)
       return acc
     },
@@ -32,14 +33,14 @@ const TotalEarning = ({ data }) => {
   )
 
   const avgHydration = totals.hydration / totalDays
-  const avgExercise = totals.exercise / totalDays
+  const avgExercise = totals.exercise / totalDays // already in minutes
   const avgSleep = totals.sleep / totalDays
 
   const progressData = [
     {
       progress: calculateProgress(avgHydration, hydrationGoal),
       title: 'Hydration',
-      amount: `${(avgHydration / 1000).toFixed(1)}L / 2L`,
+      amount: `${avgHydration.toFixed(1)}L / 4L`,
       subtitle: 'Avg daily water intake',
       imgSrc: '/images/health/water.png'
     },
@@ -47,7 +48,7 @@ const TotalEarning = ({ data }) => {
       progress: calculateProgress(avgExercise, exerciseGoal),
       color: 'info',
       title: 'Exercise',
-      amount: `${avgExercise.toFixed(0)} min / 50 min`,
+      amount: `${avgExercise.toFixed(0)} min / 180 min`,
       subtitle: 'Avg workout duration',
       imgSrc: '/images/health/exercise.png'
     },

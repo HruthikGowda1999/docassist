@@ -73,10 +73,7 @@ const WeeklyHealthOverview = ({ steps = [] }) => {
     }
   }
 
-  const averageSteps =
-    steps.length > 0
-      ? (steps.reduce((acc, curr) => acc + curr, 0) / steps.length).toFixed(1)
-      : '0.0'
+  const averageSteps = steps.length > 0 ? (steps.reduce((acc, curr) => acc + curr, 0) / steps.length).toFixed(1) : '0.0'
 
   return (
     <Card>

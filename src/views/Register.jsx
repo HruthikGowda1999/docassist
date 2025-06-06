@@ -251,11 +251,11 @@ const Register = ({ mode }) => {
                   helperText={errors.specialization}
                 >
                   <MenuItem value=''>Select Specialization</MenuItem>
-                  <MenuItem value='Cardiologist'>Cardiologist</MenuItem>
-                  <MenuItem value='Dermatologist'>Dermatologist</MenuItem>
-                  <MenuItem value='Pediatrician'>Pediatrician</MenuItem>
-                  <MenuItem value='General Surgeon'>General Surgeon</MenuItem>
-                  <MenuItem value='Neurologist'>Neurologist</MenuItem>
+                  <MenuItem value='Obstetrician'>Obstetrician</MenuItem>
+                  <MenuItem value='Gynecologist'>Gynecologist</MenuItem>
+                  <MenuItem value='Prenatal Care Specialist'>Prenatal Care Specialist</MenuItem>
+                  <MenuItem value='Midwife'>Midwife</MenuItem>
+                  <MenuItem value='Reproductive Endocrinologist'>Reproductive Endocrinologist</MenuItem>
                 </TextField>
               )}
 
