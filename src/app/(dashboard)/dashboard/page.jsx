@@ -6,8 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
 import Grow from '@mui/material/Grow'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/material'
-import { Dialog } from '@mui/material'
+import { Box, Dialog } from '@mui/material'
 
 // React + Other Imports
 import { useEffect, useState } from 'react'
